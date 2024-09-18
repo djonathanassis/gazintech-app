@@ -26,7 +26,7 @@ trait BaseMethodTrait
 
     public function create(array $data): Model
     {
-        return $this->model->create($data);
+        return $this->model->create($data)->refresh();
     }
 
     public function update(int $id, array $data): Model

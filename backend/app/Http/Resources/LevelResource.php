@@ -13,7 +13,6 @@ class LevelResource extends JsonResource
 {
     final public function toArray(Request $request): array
     {
-        dd($this);
         return [
             'id' => $this->id,
             'level' => $this->level,

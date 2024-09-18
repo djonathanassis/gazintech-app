@@ -9,6 +9,553 @@
         "version": "1.0"
     },
     "paths": {
+        "/api/desenvolvedores": {
+            "get": {
+                "tags": [
+                    "Desenvolvedores"
+                ],
+                "summary": "Lista todos os desenvolvedores",
+                "description": "Retorna uma lista paginada de desenvolvedores",
+                "operationId": "1ba3c5aa3f1a25a3ec17a1244bd40f15",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número da página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Número de itens por página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Campo que vai ser ordenado",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "Ordenação crescente (asc) ou descrescente (desc)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Filtra pelo id do desenvolvedor",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "nome",
+                        "in": "query",
+                        "description": "Filtra pelo nome do desenvolvedor",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "hobby",
+                        "in": "query",
+                        "description": "Filtra pelo hobby do desenvolvedor",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sexo",
+                        "in": "query",
+                        "description": "Filtra pelo sexo do desenvolvedor",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "nivel_id",
+                        "in": "query",
+                        "description": "Filtra pelo nivel do desenvolvedor",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de desenvolvedores",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "ID do desenvolvedor",
+                                                        "type": "integer"
+                                                    },
+                                                    "nome": {
+                                                        "description": "Nome do desenvolvedor",
+                                                        "type": "string"
+                                                    },
+                                                    "hobby": {
+                                                        "description": "Hobby do desenvolvedor",
+                                                        "type": "string"
+                                                    },
+                                                    "sexo": {
+                                                        "description": "Sexo do desenvolvedor",
+                                                        "type": "string"
+                                                    },
+                                                    "data_nascimento": {
+                                                        "description": "Data de nascimento do desenvolvedor",
+                                                        "type": "string",
+                                                        "format": "date"
+                                                    },
+                                                    "nivel_id": {
+                                                        "description": "ID do nível do desenvolvedor",
+                                                        "type": "integer"
+                                                    },
+                                                    "idade": {
+                                                        "description": "Idade do desenvolvedor",
+                                                        "type": "integer",
+                                                        "readOnly": true
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Desenvolvedores"
+                ],
+                "summary": "Cria um novo desenvolvedor",
+                "description": "Cria um novo desenvolvedor",
+                "operationId": "5d450d92e34ec4faf658a7186ecb995c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "schema": "Desenvolvedor",
+                                "title": "Desenvolvedor",
+                                "properties": {
+                                    "search": {
+                                        "description": "Nome do desenvolvedor",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Desenvolvedor criado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Desenvolvedor",
+                                    "title": "Desenvolvedor",
+                                    "required": [
+                                        "nome",
+                                        "hobby",
+                                        "nivel_id",
+                                        "sexo",
+                                        "data_nascimento"
+                                    ],
+                                    "properties": {
+                                        "id": {
+                                            "description": "ID do desenvolvedor",
+                                            "type": "integer"
+                                        },
+                                        "nome": {
+                                            "description": "Nome do desenvolvedor",
+                                            "type": "string"
+                                        },
+                                        "hobby": {
+                                            "description": "Hobby do desenvolvedor",
+                                            "type": "string"
+                                        },
+                                        "sexo": {
+                                            "description": "Sexo do desenvolvedor",
+                                            "type": "string"
+                                        },
+                                        "data_nascimento": {
+                                            "description": "Data de nascimento do desenvolvedor",
+                                            "type": "string",
+                                            "format": "date"
+                                        },
+                                        "nivel_id": {
+                                            "description": "ID do nível do desenvolvedor",
+                                            "type": "integer"
+                                        },
+                                        "idade": {
+                                            "description": "Idade do desenvolvedor",
+                                            "type": "integer",
+                                            "readOnly": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida"
+                    }
+                }
+            }
+        },
+        "/api/desenvolvedores/{id}": {
+            "put": {
+                "tags": [
+                    "Desenvolvedores"
+                ],
+                "summary": "Atualiza um desenvolvedor existente",
+                "description": "Atualiza os dados de um desenvolvedor existente",
+                "operationId": "be61a47a3938549894bcd5979a4831a9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do desenvolvedor",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "schema": "Desenvolvedor",
+                                "title": "Desenvolvedor",
+                                "required": [
+                                    "nome",
+                                    "hobby",
+                                    "nivel_id",
+                                    "sexo",
+                                    "data_nascimento"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "description": "ID do desenvolvedor",
+                                        "type": "integer"
+                                    },
+                                    "nome": {
+                                        "description": "Nome do desenvolvedor",
+                                        "type": "string"
+                                    },
+                                    "hobby": {
+                                        "description": "Hobby do desenvolvedor",
+                                        "type": "string"
+                                    },
+                                    "sexo": {
+                                        "description": "Sexo do desenvolvedor",
+                                        "type": "string"
+                                    },
+                                    "data_nascimento": {
+                                        "description": "Data de nascimento do desenvolvedor",
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "nivel_id": {
+                                        "description": "ID do nível do desenvolvedor",
+                                        "type": "integer"
+                                    },
+                                    "idade": {
+                                        "description": "Idade do desenvolvedor",
+                                        "type": "integer",
+                                        "readOnly": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Desenvolvedor atualizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Desenvolvedor",
+                                    "title": "Desenvolvedor",
+                                    "required": [
+                                        "nome",
+                                        "hobby",
+                                        "nivel_id",
+                                        "sexo",
+                                        "data_nascimento"
+                                    ],
+                                    "properties": {
+                                        "id": {
+                                            "description": "ID do desenvolvedor",
+                                            "type": "integer"
+                                        },
+                                        "nome": {
+                                            "description": "Nome do desenvolvedor",
+                                            "type": "string"
+                                        },
+                                        "hobby": {
+                                            "description": "Hobby do desenvolvedor",
+                                            "type": "string"
+                                        },
+                                        "sexo": {
+                                            "description": "Sexo do desenvolvedor",
+                                            "type": "string"
+                                        },
+                                        "data_nascimento": {
+                                            "description": "Data de nascimento do desenvolvedor",
+                                            "type": "string",
+                                            "format": "date"
+                                        },
+                                        "nivel_id": {
+                                            "description": "ID do nível do desenvolvedor",
+                                            "type": "integer"
+                                        },
+                                        "idade": {
+                                            "description": "Idade do desenvolvedor",
+                                            "type": "integer",
+                                            "readOnly": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Desenvolvedor não encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Desenvolvedores"
+                ],
+                "summary": "Exclui um desenvolvedor",
+                "description": "Exclui um desenvolvedor existente",
+                "operationId": "1f033219ba91b404240b3ad53d65457d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do desenvolvedor",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Desenvolvedor excluído com sucesso."
+                    },
+                    "404": {
+                        "description": "Desenvolvedor não encontrado."
+                    }
+                }
+            }
+        },
+        "/api/niveis": {
+            "get": {
+                "tags": [
+                    "Níveis"
+                ],
+                "summary": "Lista todos os níveis",
+                "description": "Retorna uma lista paginada de níveis",
+                "operationId": "ba69477b5febe5b79b7d473ca2300af3",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número da página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Número de itens por página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Campo que vai ser ordenado",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "Ordenação crescente (asc) ou descrescente (desc)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Filtra pela descrição do nível",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de níveis",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "nivel": {
+                                                        "description": "Nome do nível",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Níveis"
+                ],
+                "summary": "Cria um novo nível",
+                "description": "Cria um novo nível",
+                "operationId": "1b888cad19da322f4f972a17b927515e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "schema": "Nivel",
+                                "title": "Nivel",
+                                "properties": {
+                                    "nivel": {
+                                        "description": "Nome do nível",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Nível criado"
+                    },
+                    "400": {
+                        "description": "Requisição inválida"
+                    }
+                }
+            }
+        },
         "/api/niveis/{id}": {
             "put": {
                 "tags": [
@@ -88,6 +635,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Desenvolvedores",
+            "description": "Desenvolvedores"
+        },
         {
             "name": "Níveis",
             "description": "Níveis"
