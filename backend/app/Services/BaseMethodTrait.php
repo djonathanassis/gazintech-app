@@ -4,37 +4,52 @@ namespace App\Services;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
-
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 trait BaseMethodTrait
 {
-    final public function paginate(
-        string $search = null,
-        int $perPage = 15,
-        string $sort = 'created_at',
-        string $direction = 'desc'
+    public function paginate(
+        Request $request,
+        array $columns = [],
     ): LengthAwarePaginator {
-        return $this->model->search($search)
+        $search = $request->string('search');
+        $page = $request->integer('page', 1);
+        $perPage = $request->integer('per_page', 10);
+        $sort = $request->string('sort', 'created_at');
+        $direction = $request->string('order', 'asc');
+
+        return $this->model->search($search, $columns)
             ->orderBy($sort, $direction)
-            ->paginate($perPage);
+            ->paginate($perPage, ['*'], 'page', $page);
     }
 
-    final public function create(array $data): Model
+    public function create(array $data): Model
     {
         return $this->model->create($data);
     }
 
-    final public function update(int $id, array $data): Model
+    public function update(int $id, array $data): Model
     {
-        $model = $this->model->findOrFail($id);
+        $model = $this->model->find($id);
 
-        $model?->update($data);
+        if (null === $model) {
+            abort(Response::HTTP_NOT_FOUND, 'Registro não encontrado.');
+        }
 
-        return $model?->refresh();
+        $model->update($data);
+
+        return $model->refresh();
     }
 
-    final public function delete(int $id): void
+    public function delete(int $id): void
     {
-        $this->model->findOrFail($id)?->delete();
+        $model = $this->model->find($id);
+
+        if (null === $model) {
+            abort(Response::HTTP_NOT_FOUND, 'Registro não encontrado.');
+        }
+
+        $model->delete();
     }
 }

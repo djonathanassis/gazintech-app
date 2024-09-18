@@ -9,7 +9,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
 
-class LevelRequest extends FormRequest
+class PaginationRequest extends FormRequest
 {
     final public function authorize(): bool
     {
@@ -19,16 +19,26 @@ class LevelRequest extends FormRequest
     final public function rules(): array
     {
         return [
-            'level' => ['required', 'string', 'max:100'],
-        ];
-    }
-
-    final public function messages(): array
-    {
-        return [
-            'level.required' => 'O campo level é obrigatório',
-            'level.string' => 'O campo level deve ser uma string',
-            'level.max' => 'O campo level deve ter no máximo 255 caracteres',
+            'search' => [
+                'sometimes',
+                'string',
+            ],
+            'sort' => [
+                'sometimes',
+                'string',
+            ],
+            'order' => [
+                'sometimes',
+                'in:asc,desc',
+            ],
+            'page' => [
+                'sometimes',
+                'integer',
+            ],
+            'per_page' => [
+                'sometimes',
+                'integer',
+            ],
         ];
     }
 

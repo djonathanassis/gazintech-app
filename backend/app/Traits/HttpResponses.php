@@ -36,11 +36,9 @@ trait HttpResponses
     final public function responseError(
         string $message = '',
         string|int $status = Response::HTTP_BAD_REQUEST,
-        string $error = '',
     ): JsonResponse {
         return response()->json([
             'message' => $message,
-            'error'    => $error,
         ], $status);
     }
 }

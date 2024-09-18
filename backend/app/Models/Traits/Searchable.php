@@ -9,7 +9,7 @@ trait Searchable
 {
     use Conditionable;
 
-    final public function scopeSearch(Builder $query, string $search = null, ...$columns): Builder
+    final public function scopeSearch(Builder $query, string $search = null, array $columns = []): Builder
     {
         return $query->when($search, function (Builder $query) use ($search, $columns) {
             $search  = trim($search);

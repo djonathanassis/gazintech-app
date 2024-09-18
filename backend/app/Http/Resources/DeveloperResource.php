@@ -21,8 +21,8 @@ class DeveloperResource extends JsonResource
             'hobby' => $this->hobby,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'level_id' => $this->level_id,
-            'level' => new LevelResource($this->whenLoaded('level')),
+            'age' => $this->age,
+            'level' => $this->level()->first(['id', 'level']),
         ];
     }
 }

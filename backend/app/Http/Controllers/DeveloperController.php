@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DeveloperRequest;
+use App\Http\Requests\PaginationRequest;
 use App\Http\Resources\DeveloperResource;
 use App\Models\Developer;
 use App\Services\Developer\DeveloperService;
@@ -18,9 +19,9 @@ class DeveloperController extends Controller
     ) {
     }
 
-    final public function index(): AnonymousResourceCollection
+    final public function index(PaginationRequest $request): AnonymousResourceCollection
     {
-        return DeveloperResource::collection($this->developerService->paginate());
+        return DeveloperResource::collection($this->developerService->paginate($request, ['id', 'name']));
     }
 
     final public function store(DeveloperRequest $request): DeveloperResource
