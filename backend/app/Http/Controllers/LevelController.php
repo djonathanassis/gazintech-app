@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\DTOs\LevelDto;
 use App\Http\Requests\LevelRequest;
 use App\Http\Requests\PaginationRequest;
 use App\Http\Resources\LevelResource;
@@ -145,7 +146,11 @@ class LevelController extends Controller
      */
     final public function store(LevelRequest $request): JsonResponse
     {
-        return LevelResource::make($this->levelService->create($request->validated()))
+        return LevelResource::make(
+            $this->levelService->create(
+                LevelDto::fromRequest($request->validated())->toArray()
+            )
+        )
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
     }
@@ -189,7 +194,12 @@ class LevelController extends Controller
     final public function update(LevelRequest $request, int $id): JsonResponse
     {
         try {
-            return LevelResource::make($this->levelService->update($id, $request->validated()))
+            return LevelResource::make(
+                $this->levelService->update(
+                    $id,
+                    LevelDto::fromRequest($request->validated())->toArray()
+                )
+            )
                 ->response()
                 ->setStatusCode(Response::HTTP_ACCEPTED);
         } catch (\Throwable $throwable) {

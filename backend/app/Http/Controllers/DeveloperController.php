@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\DTOs\DeveloperDto;
 use App\Http\Requests\DeveloperRequest;
 use App\Http\Requests\PaginationRequest;
 use App\Http\Resources\DeveloperResource;
@@ -253,9 +254,15 @@ class DeveloperController extends Controller
      *     )
      * )
      */
-    final public function store(DeveloperRequest $request): DeveloperResource
+    final public function store(DeveloperRequest $request): JsonResponse
     {
-        return DeveloperResource::make($this->developerService->create($request->validated()));
+        return DeveloperResource::make(
+            $this->developerService->create(
+                DeveloperDto::fromRequest($request->validated())->toArray()
+            )
+        )
+            ->response()
+            ->setStatusCode(Response::HTTP_CREATED);
     }
 
     /**
@@ -373,7 +380,12 @@ class DeveloperController extends Controller
     final public function update(DeveloperRequest $request, int $id): JsonResponse
     {
         try {
-            return DeveloperResource::make($this->developerService->update($id, $request->validated()))
+            return DeveloperResource::make(
+                $this->developerService->update(
+                    $id,
+                    DeveloperDto::fromRequest($request->validated())->toArray()
+                )
+            )
                 ->response()
                 ->setStatusCode(Response::HTTP_ACCEPTED);
         } catch (\Throwable $throwable) {

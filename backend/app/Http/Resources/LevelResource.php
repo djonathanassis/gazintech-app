@@ -15,7 +15,7 @@ class LevelResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'level' => $this->level,
+            'nivel' => $this->level,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

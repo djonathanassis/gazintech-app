@@ -15,14 +15,14 @@ class DeveloperResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'sex' => $this->sex,
-            'dt_birth' => $this->dt_birth,
+            'nome' => $this->name,
+            'sexo' => $this->sex,
+            'data_nascimento' => $this->dt_birth,
+            'idade' => $this->age,
             'hobby' => $this->hobby,
+            'level' => $this->level()->first(['id', 'level']),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'age' => $this->age,
-            'level' => $this->level()->first(['id', 'level']),
         ];
     }
 }

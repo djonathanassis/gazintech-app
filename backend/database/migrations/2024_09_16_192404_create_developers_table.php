@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('name');
             $table->char('sex');
             $table->dateTime('dt_birth');
-            $table->string('hobby');
+            $table->string('hobby')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
