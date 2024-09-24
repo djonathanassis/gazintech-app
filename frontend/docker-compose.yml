@@ -1,6 +1,6 @@
 services:
   nuxt:
-    image: node:latest
+    image: node:18-alpine
     extra_hosts:
       - 'host.docker.internal:host-gateway'
     working_dir: /app
@@ -9,7 +9,7 @@ services:
       - /app/node_modules
     ports:
       - '3000:3000'
-    command: sh -c "npm install && npm run dev"
+    command: sh -c "npm cache clean --force && npm install && npm run dev"
     environment:
       - NODE_ENV=development
     networks:

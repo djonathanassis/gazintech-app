@@ -26,7 +26,7 @@ npm:
 		-e HOME=/home/node \
 		-w /app \
 		--user node \
-		node:latest \
+		node:18-alpine \
 		sh -c "npm cache clean --force && npm install"
 
 
