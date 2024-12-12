@@ -258,7 +258,7 @@ class DeveloperController extends Controller
     {
         return DeveloperResource::make(
             $this->developerService->create(
-                DeveloperDto::fromArray($request->validated())->toArray()
+                DeveloperDto::fromRequest($request->validated())->toArray()
             )
         )
             ->response()
@@ -383,7 +383,7 @@ class DeveloperController extends Controller
             return DeveloperResource::make(
                 $this->developerService->update(
                     $id,
-                    DeveloperDto::fromArray($request->validated())->toArray()
+                    DeveloperDto::fromRequest($request->validated())->toArray()
                 )
             )
                 ->response()
