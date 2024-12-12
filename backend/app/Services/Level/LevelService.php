@@ -5,34 +5,38 @@ declare(strict_types=1);
 namespace App\Services\Level;
 
 use App\Models\Level;
-use App\Services\AbstractService;
-use Symfony\Component\HttpFoundation\Response;
+use App\Repository\Interface\RepositoryInterface;
 
-class LevelService extends AbstractService
+readonly class LevelService
 {
-    public function __construct(Level $model)
+    public function __construct(
+        private RepositoryInterface $repository
+    ) {
+       $this->repository->managerEloquent(Level::class);
+    }
+
+    public function list()
     {
-        parent::__construct($model);
+        return $this->repository->list();
+    }
+
+    public function findById(int $id): object
+    {
+        return $this->repository->findById($id);
+    }
+
+    public function create(array $data): Level
+    {
+        return $this->repository->create($data);
+    }
+
+    public function update(int $id, array $data): Level
+    {
+        return $this->repository->update($id, $data);
     }
 
     public function delete(int $id): void
     {
-        $model = $this->model->find($id);
-
-        if (null === $model) {
-            abort(
-                code: Response::HTTP_BAD_REQUEST,
-                message: 'Nível não encontrado.'
-            );
-        }
-
-        if ($model->developers()->exists()) {
-            abort(
-                code: Response::HTTP_BAD_REQUEST,
-                message: 'Nível associado a desenvolvedores, não pode ser excluído.'
-            );
-        }
-
-        $model->delete();
+        $this->repository->delete($id);
     }
 }

@@ -145,7 +145,7 @@ class DeveloperController extends Controller
     final public function index(PaginationRequest $request): AnonymousResourceCollection
     {
         return DeveloperResource::collection(
-            $this->developerService->paginate($request, ['id', 'nome', 'hobby', 'sexo', 'nivel_id'])
+            $this->developerService->list()
         );
     }
 
@@ -258,7 +258,7 @@ class DeveloperController extends Controller
     {
         return DeveloperResource::make(
             $this->developerService->create(
-                DeveloperDto::fromRequest($request->validated())->toArray()
+                DeveloperDto::fromArray($request->validated())->toArray()
             )
         )
             ->response()
@@ -383,7 +383,7 @@ class DeveloperController extends Controller
             return DeveloperResource::make(
                 $this->developerService->update(
                     $id,
-                    DeveloperDto::fromRequest($request->validated())->toArray()
+                    DeveloperDto::fromArray($request->validated())->toArray()
                 )
             )
                 ->response()

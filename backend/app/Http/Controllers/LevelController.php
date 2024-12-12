@@ -112,7 +112,18 @@ class LevelController extends Controller
      */
     final public function index(PaginationRequest $request): AnonymousResourceCollection
     {
-        return LevelResource::collection($this->levelService->paginate($request, ['id', 'level']));
+        return LevelResource::collection($this->levelService->list());
+    }
+
+    public function show(int $id): JsonResponse
+    {
+        try {
+            return LevelResource::make($this->levelService->findById($id))
+                ->response()
+                ->setStatusCode(Response::HTTP_OK);
+        } catch (\Throwable $throwable) {
+            return $this->responseError($throwable->getMessage());
+        }
     }
 
     /**
@@ -148,7 +159,7 @@ class LevelController extends Controller
     {
         return LevelResource::make(
             $this->levelService->create(
-                LevelDto::fromRequest($request->validated())->toArray()
+                LevelDto::fromRequest($request)->toArray()
             )
         )
             ->response()
